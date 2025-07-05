@@ -1,0 +1,2 @@
+This assignment implements Abstract Data type in two different methods.
+All the operations are implemented by array using dynamic memory in arraystack.cpp file. The same operations are also implemented using linked list in liststack.cpp file. The tests are done in the test.cpp file to validate the correctness. All the class definition and the abstraction methods are called in stack.h file.
