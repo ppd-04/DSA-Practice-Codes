@@ -631,6 +631,50 @@ public:
 
     }
 
+    
+    bool HasCycle() const {
+    bool* visited = new bool[capacity]();
+    int* parent = new int[capacity]();
+    ListQueue q;
+
+    // Check all nodes to handle disconnected components
+    for (int start = 0; start < capacity; start++) {
+        if (!exists[start] || visited[start]) continue; // Skip non-existent or visited nodes
+
+        // Start BFS from 'start'
+        q.enqueue(start);
+        visited[start] = true;
+        parent[start] = -1; // No parent for the start node
+
+        while (!q.empty()) {
+            int cur = q.dequeue();
+
+            // Check neighbors
+            Node* neighbour = adjacentList[cur];
+            while (neighbour) {
+                int nxt = neighbour->data;
+                if (exists[nxt]) { // Only process valid neighbors
+                    if (!visited[nxt]) {
+                        q.enqueue(nxt);
+                        visited[nxt] = true;
+                        parent[nxt] = cur;
+                    } else if (nxt != parent[cur]) {
+                        // Visited node that's not the parent indicates a cycle
+                        delete[] visited;
+                        delete[] parent;
+                        return true;
+                    }
+                }
+                neighbour = neighbour->next;
+            }
+        }
+    }
+
+    delete[] visited;
+    delete[] parent;
+    return false;
+}
+
 
     // ends here
 
